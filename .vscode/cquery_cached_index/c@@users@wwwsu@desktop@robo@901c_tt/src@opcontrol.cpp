@@ -22,8 +22,8 @@ void opcontrol() {
 	int left_joystick;
 	int right_joystick;
 	pros::Controller controller(pros::E_CONTROLLER_MASTER);
-	int left;
 	int right;
+	int left; //  test
 	while (true) {
 		left_joystick = controller.get_analog(ANALOG_LEFT_Y);
  		right_joystick = controller.get_analog(ANALOG_RIGHT_X);
