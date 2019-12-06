@@ -1,4 +1,6 @@
 #include "main.h"
+#include "configure/config.h"
+#include "auton_functions/auton_functions.h"
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -11,4 +13,9 @@
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+  //one_point_lmao();
+  flipout();
+  rnjesus_red();
+
+}

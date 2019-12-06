@@ -1,5 +1,6 @@
 #include "main.h"
 #include "configure/config.h" // motor ports
+#include "auton_functions/auton_functions.h"
 
 void opcontrol() {
 	int left_joystick;
@@ -10,6 +11,7 @@ void opcontrol() {
 	bool l2;
 	int right;
 	int left;
+	bool flipped = false;
 
 	while (true) {
 
@@ -50,9 +52,14 @@ void opcontrol() {
 
 		// if only left joysticks is between 120 to 127, move forward at max speed,
 		// turn at half speed
-		else if(abs(left_joystick)>= 15 || abs(right_joystick) >= 15){
+		else if(abs(left_joystick)>= 30 || abs(right_joystick) >= 30){
 			left = 0.8*(-left_joystick - right_joystick);
 			right = 0.8*(-left_joystick + right_joystick);
+		}
+		// move very slow when between 10 and 30
+		else if(abs(left_joystick)>= 10 || abs(right_joystick) >= 10){
+			left = 0.5*(-left_joystick - right_joystick);
+			right = 0.5*(-left_joystick + right_joystick);
 		}
 		else{
 			left = 0;
@@ -60,9 +67,9 @@ void opcontrol() {
 		}
 
 		if(shift && r2){
-			lift.move_velocity(200); // moves up
+			lift.move_velocity(150); // moves up
 		}
-		else if(r2){
+		else if(r2 && !lift_limit.get_value()){
 			lift.move_velocity(-100);
 		}
 		else{
@@ -77,9 +84,18 @@ void opcontrol() {
 			intakeL.move_velocity(-200); // moves in
 			intakeR.move_velocity(-200); // moves in
 		}
+		else if(controller.get_digital(DIGITAL_B)){
+			intakeL.move_velocity(50); // moves out
+			intakeR.move_velocity(50); // moves out
+		}
 		else{
 			intakeL.move_velocity(0); // stops
 			intakeR.move_velocity(0); // stops
+		}
+
+		if(controller.get_digital(DIGITAL_DOWN) && !flipped){
+			flipout();
+			flipped = true;
 		}
 
 		if(shift && l2){
