@@ -7,3 +7,5 @@ void flipout();
 void rnjesus_red();
 
 void rnjesus_blue();
+
+void pushy();

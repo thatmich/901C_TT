@@ -15,7 +15,15 @@
  */
 void autonomous() {
   //one_point_lmao();
+  pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
+  pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
+  pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
+  pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
   flipout();
+  pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_BRAKE);
+  pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
+  pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
+  pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
   rnjesus_red();
 
 }

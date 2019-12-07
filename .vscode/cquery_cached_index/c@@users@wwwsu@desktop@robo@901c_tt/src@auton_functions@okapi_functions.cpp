@@ -46,6 +46,7 @@ void flipout(){
   tray_motor.waitUntilSettled();
   lift_motor.setTarget(600);
   lift_motor.waitUntilSettled();
+  pros::delay(400);
   lift_motor.setTarget(0);
   tray_motor.setTarget(0);
   lift_motor.waitUntilSettled();
@@ -67,6 +68,14 @@ void flipout(){
   // tray.move_absolute(0, 100);
 }
 
+void pushy(){
+  chassis.setMaxVelocity(60);
+  chassis.moveDistance(-8_in);
+  chassis.waitUntilSettled();
+  chassis.moveDistance(8.5_in);
+  pros::delay(200);
+}
+
 void rnjesus_blue(){
   chassis.setMaxVelocity(80);
   frontL.tare_position();
@@ -86,25 +95,29 @@ void rnjesus_blue(){
   backR.move_relative(-400,80);
   pros::delay(1000);
   chassis.moveDistance(-10.5_in);
-  intakeL.move_velocity(30);
-  intakeR.move_velocity(30);
+  intakeL.move_relative(270,30);
+  intakeR.move_relative(270,30);
   pros::delay(1000);
   intakeL.move_velocity(0);
   intakeR.move_velocity(0);
   tray_motor.setMaxVelocity(80);
-  tray_motor.setTarget(1400);
+  tray_motor.setTarget(1000);
+  tray_motor.waitUntilSettled();
+  chassis.moveDistance(-2.5_in);
+  chassis.waitUntilSettled();
+  tray_motor.setTarget(1200);
   tray_motor.waitUntilSettled();
   intakeL.move_velocity(30);
   intakeR.move_velocity(30);
   tray_motor.setTarget(400);
-  pros::delay(400);
+  pros::delay(1000);
   chassis.moveDistance(15_in);
   chassis.waitUntilSettled();
   intakeL.move_velocity(0);
   intakeR.move_velocity(0);
 }
 
-void rnjesus_red(){
+void rnjesus_redskills(){
   chassis.setMaxVelocity(80);
   frontL.tare_position();
   frontR.tare_position();
@@ -112,29 +125,89 @@ void rnjesus_red(){
   backR.tare_position();
   intakeL.move_velocity(-200); // moves in
   intakeR.move_velocity(-200); // moves in
-  chassis.moveDistance(-44_in);
+  chassis.moveDistance(-52_in);
+  pros::delay(200);
+  intakeL.move_velocity(-50); // moves in
+  intakeR.move_velocity(-50); // moves in
+  chassis.moveDistance(34_in);
+  chassis.waitUntilSettled();
+
   intakeL.move_velocity(0); // moves in
   intakeR.move_velocity(0); // moves in
-  chassis.moveDistance(28_in);
-  chassis.waitUntilSettled();
   frontL.move_relative(-400,80);
   frontR.move_relative(400,80);
   backL.move_relative(-400,80);
   backR.move_relative(400,80);
   pros::delay(1000);
   chassis.moveDistance(-10.5_in);
-  intakeL.move_velocity(30);
-  intakeR.move_velocity(30);
+  intakeL.move_relative(270,30);
+  intakeR.move_relative(270,30);
   pros::delay(1000);
   intakeL.move_velocity(0);
   intakeR.move_velocity(0);
   tray_motor.setMaxVelocity(80);
-  tray_motor.setTarget(1400);
+  tray_motor.setTarget(1000);
   tray_motor.waitUntilSettled();
+  chassis.moveDistance(-3.0_in);
+  chassis.waitUntilSettled();
+  tray_motor.setTarget(1300);
+  tray_motor.waitUntilSettled();
+  pros::delay(200);
   intakeL.move_velocity(30);
   intakeR.move_velocity(30);
-  tray_motor.setTarget(400);
-  pros::delay(400);
+
+  pros::delay(2000);
+  tray_motor.setTarget(500);
+  pros::delay(2000);
+  chassis.moveDistance(15_in);
+  chassis.waitUntilSettled();
+  intakeL.move_velocity(0);
+  intakeR.move_velocity(0);
+}
+
+
+void rnjesus_red(){
+  chassis.setMaxVelocity(100);
+  frontL.tare_position();
+  frontR.tare_position();
+  backL.tare_position();
+  backR.tare_position();
+  intakeL.move_velocity(-200); // moves in
+  intakeR.move_velocity(-200); // moves in
+  chassis.moveDistance(-50_in);
+  pros::delay(100);
+  intakeL.move_velocity(-50); // moves in
+  intakeR.move_velocity(-50); // moves in
+  chassis.moveDistance(34_in);
+  chassis.waitUntilSettled();
+
+  intakeL.move_velocity(0); // moves in
+  intakeR.move_velocity(0); // moves in
+  frontL.move_relative(-400,80);
+  frontR.move_relative(400,80);
+  backL.move_relative(-400,80);
+  backR.move_relative(400,80);
+  pros::delay(1000);
+  chassis.moveDistance(-10.5_in);
+  intakeL.move_relative(700,40);
+  intakeR.move_relative(700,40);
+  pros::delay(1000);
+  tray_motor.setMaxVelocity(100);
+  tray_motor.setTarget(1000);
+  tray_motor.waitUntilSettled();
+  chassis.moveDistance(-3.0_in);
+  chassis.waitUntilSettled();
+  tray_motor.setMaxVelocity(50);
+  tray_motor.setTarget(1300);
+  tray_motor.waitUntilSettled();
+  pros::delay(100);
+  intakeL.move_velocity(30);
+  intakeR.move_velocity(30);
+
+  pros::delay(700);
+  tray_motor.setMaxVelocity(100);
+  tray_motor.setTarget(500);
+  pros::delay(1000);
   chassis.moveDistance(15_in);
   chassis.waitUntilSettled();
   intakeL.move_velocity(0);
