@@ -11,7 +11,8 @@ const int intakeL_port = 15;
 const int intakeR_port = 12;
 const int tray_port = 20;
 const int lift_port = 19;
-const int lift_limit_port = 8;
+const int lift_limit_port = 1;
+const int tray_light_port = 8;
 
 // declares motor port and whether it is reversed
 pros::Motor frontL(frontL_port,false);
@@ -22,4 +23,5 @@ pros::Motor intakeL(intakeL_port,true);
 pros::Motor intakeR(intakeR_port, false);
 pros::Motor tray(tray_port, true);
 pros::Motor lift(lift_port, true);
-pros::ADIDigitalIn lift_limit (lift_limit_port);
+//pros::ADIDigitalIn lift_limit (lift_limit_port);
+pros::ADIAnalogIn tray_light (tray_light_port);

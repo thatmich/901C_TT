@@ -10,7 +10,7 @@ extern pros::Motor intakeL;
 extern pros::Motor intakeR;
 extern pros::Motor tray;
 extern pros::Motor lift;
-extern pros::ADIDigitalIn lift_limit;
+extern pros::ADIAnalogIn tray_light;
 
 extern const int frontL_port;
 extern const int frontR_port;
@@ -20,4 +20,4 @@ extern const int intakeL_port;
 extern const int intakeR_port;
 extern const int tray_port;
 extern const int lift_port;
-extern const int limit_port;
+extern const int tray_light_port;

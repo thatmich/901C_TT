@@ -13,6 +13,12 @@ void opcontrol() {
 	int left;
 	bool flipped = false;
 
+	flipout(); flipped = true;
+
+	std::string param("lift");
+	pros::Task task1(lift_task,&param);
+	pros::Task task2(tray_task,&param);
+
 	while (true) {
 
 		// declares joystick values
@@ -66,15 +72,15 @@ void opcontrol() {
 			right = 0;
 		}
 
-		if(shift && r2){
-			lift.move_velocity(150); // moves up
-		}
-		else if(r2 && !lift_limit.get_value()){
-			lift.move_velocity(-100);
-		}
-		else{
-			lift.move_velocity(0);
-		}
+		// if(shift && r2){
+		// 	lift.move_velocity(150); // moves up
+		// }
+		// else if(r2){
+		// 	lift.move_velocity(-100);
+		// }
+		// else{
+		// 	lift.move_velocity(0);
+		// }
 
 		if(shift && r1){
 			intakeL.move_velocity(200); // moves out
@@ -85,18 +91,14 @@ void opcontrol() {
 			intakeR.move_velocity(-200); // moves in
 		}
 		else if(controller.get_digital(DIGITAL_B)){
-			intakeL.move_velocity(50); // moves out
-			intakeR.move_velocity(50); // moves out
+			intakeL.move_velocity(80); // moves out
+			intakeR.move_velocity(80); // moves out
 		}
 		else{
 			intakeL.move_velocity(0); // stops
 			intakeR.move_velocity(0); // stops
 		}
 
-		if(controller.get_digital(DIGITAL_DOWN) && !flipped){
-			flipout();
-			flipped = true;
-		}
 
 		if(shift && l2){
 			tray.move_velocity(100); // tilts to 90
@@ -107,6 +109,8 @@ void opcontrol() {
 		else{
 			tray.move_velocity(0); // stops
 		}
+
+
 
 
 		// assign left and right values to the motors

@@ -14,7 +14,8 @@
  * from where it left off.
  */
 void autonomous() {
-  //one_point_lmao();
+  // one_point_lmao();
+  pushy();
   pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
   pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
   pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
@@ -24,6 +25,5 @@ void autonomous() {
   pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
   pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
   pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
-  rnjesus_red();
-
+  rnjesus_redskills();
 }
