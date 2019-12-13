@@ -17,3 +17,5 @@ void stack();
 void lift_task(void* param);
 
 void tray_task(void* param);
+
+extern bool stacking;

@@ -15,9 +15,10 @@ void opcontrol() {
 
 	flipout(); flipped = true;
 
-	std::string param("lift");
-	pros::Task task1(lift_task,&param);
-	pros::Task task2(tray_task,&param);
+	std::string param1("lift");
+	std::string param2("tray");
+	pros::Task task1(lift_task,&param1);
+	pros::Task task2(tray_task,&param2);
 
 	while (true) {
 
@@ -36,9 +37,8 @@ void opcontrol() {
 		pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
 
 		pros::c::motor_set_brake_mode(lift_port, MOTOR_BRAKE_HOLD);
-		pros::c::motor_set_brake_mode(tray_port, MOTOR_BRAKE_HOLD);
-		pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_HOLD);
-		pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_HOLD);
+		pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_COAST);
+		pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_COAST);
 
 
 		// if both joysticks are between 120 to 127, move forward and
@@ -81,34 +81,31 @@ void opcontrol() {
 		// else{
 		// 	lift.move_velocity(0);
 		// }
+			if(shift && r1){
 
-		if(shift && r1){
-			intakeL.move_velocity(200); // moves out
-			intakeR.move_velocity(200); // moves out
-		}
-		else if(r1){
-			intakeL.move_velocity(-200); // moves in
-			intakeR.move_velocity(-200); // moves in
-		}
-		else if(controller.get_digital(DIGITAL_B)){
-			intakeL.move_velocity(80); // moves out
-			intakeR.move_velocity(80); // moves out
-		}
-		else{
-			intakeL.move_velocity(0); // stops
-			intakeR.move_velocity(0); // stops
-		}
+	      pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_HOLD);
+	      pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_HOLD);
+				intakeL.move_velocity(200); // moves out
+				intakeR.move_velocity(200); // moves out
+			}
+			else if(r1){
+				pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_HOLD);
+	      pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_HOLD);
+				intakeL.move_velocity(-200); // moves in
+				intakeR.move_velocity(-200); // moves in
+			}
+			else if(controller.get_digital(DIGITAL_B)){
+				pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_HOLD);
+	      pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_HOLD);
+				intakeL.move_velocity(80); // moves out
+				intakeR.move_velocity(80); // moves out
+			}
+			else if(!stacking){
+				intakeL.move_velocity(0); // stops
+				intakeR.move_velocity(0); // stops
+			}
 
 
-		if(shift && l2){
-			tray.move_velocity(100); // tilts to 90
-		}
-		else if(l2){
-			tray.move_velocity(-100); // moves back
-		}
-		else{
-			tray.move_velocity(0); // stops
-		}
 
 
 

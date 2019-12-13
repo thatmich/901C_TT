@@ -4,7 +4,7 @@
 using namespace okapi;
 
 const auto WHEEL_DIAMETER = 4_in;
-const auto CHASSIS_WIDTH = 0_in;
+const auto CHASSIS_WIDTH = 33_in;
 
 auto chassis = ChassisControllerFactory::create(
   {-10, -9},
@@ -15,6 +15,8 @@ auto chassis = ChassisControllerFactory::create(
 
 auto lift_motor = AsyncControllerFactory::posIntegrated(lift_port);
 auto tray_motor = AsyncControllerFactory::posIntegrated(tray_port);
+
+bool stacking;
 
 void one_point_lmao(){
   chassis.setMaxVelocity(80);
@@ -117,21 +119,26 @@ void rnjesus_blue(){
   intakeR.move_velocity(0);
 }
 
-void stack(){
-  // while(tray_light.get_value()>2300){
-  //   intakeL.move(20);
-  //   intakeR.move(20);
-  //   pros::delay(20);
-  // }
-  //intakeL.move_relative(200, 50);
-  //intakeR.move_relative(200, 50);
-  tray_motor.setMaxVelocity(100);
-  tray_motor.setTarget(1000);
-  tray_motor.waitUntilSettled();
-  chassis.waitUntilSettled();
-  tray_motor.setMaxVelocity(80);
+void tare(){
+  frontL.tare_position();
+  frontR.tare_position();
+  backL.tare_position();
+  backR.tare_position();
+}
+
+void stack(void *param){
+  int time = 0;
+  stacking = true;
+  intakeR.move_relative(550, 50);
+  intakeL.move_relative(550, 50);
+  pros::delay(1000);
+  intakeR.move_velocity(0);
+  intakeL.move_velocity(0);
+  pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_COAST);
+  pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_COAST);
   tray_motor.setTarget(1200);
   tray_motor.waitUntilSettled();
+  stacking = false;
 }
 
 void run_for(int speed, int time){
@@ -149,32 +156,23 @@ void run_for(int speed, int time){
 
 void rnjesus_redskills(){
   chassis.setMaxVelocity(80);
-  frontL.tare_position();
-  frontR.tare_position();
-  backL.tare_position();
-  backR.tare_position();
+  tare();
   intakeL.move_velocity(-200); // moves in
   intakeR.move_velocity(-200); // moves in
-  chassis.moveDistance(-62_in);
+  chassis.moveDistance(-52_in);
   chassis.waitUntilSettled();
   chassis.setMaxVelocity(80);
 
   intakeL.move_velocity(0); // moves in
   intakeR.move_velocity(0); // moves in
-  frontL.tare_position();
-  frontR.tare_position();
-  backL.tare_position();
-  backR.tare_position();
+  tare();
   chassis.moveDistance(59_in);
   chassis.waitUntilSettled();
   run_for(50, 1000);
 
 
   chassis.setMaxVelocity(50);
-  frontL.tare_position();
-  frontR.tare_position();
-  backL.tare_position();
-  backR.tare_position();
+  tare();
   chassis.moveDistance(-24_in);
   chassis.waitUntilSettled();
   frontL.tare_position();
@@ -184,18 +182,21 @@ void rnjesus_redskills(){
 
   pros::delay(300);
 
-  frontL.move_relative(-440,40);
+  frontL.move_relative(-440,40); // turn 120 deg?
   frontR.move_relative(440,40);
   backL.move_relative(-440,40);
   backR.move_relative(440,40);
   pros::delay(3000);
   intakeL.move_velocity(0); // moves in
   intakeR.move_velocity(0); // moves in
-  run_for(-80, 1200);
-  pros::delay(100);
-  chassis.moveDistance(2.5_in);
+  chassis.moveDistance(-8.5_in);
   chassis.waitUntilSettled();
-  stack();
+  std::string param3("stack");
+  pros::Task task3(stack,&param3);
+  pros::delay(3000);
+  intakeL.move_velocity(200);
+  intakeR.move_velocity(200);
+  tare();
   chassis.moveDistance(10_in);
   chassis.waitUntilSettled();
   tray_motor.setTarget(10);
@@ -258,19 +259,26 @@ void lift_task(void* param){
   lift_motor.setMaxVelocity(100);
   while(true){
     if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
-      lift_motor.setTarget(700);
-  }
-  else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y)){
-    lift_motor.setTarget(900);
+      lift_motor.setMaxVelocity(200);
+      lift_motor.setTarget(1160);
+      lift_motor.waitUntilSettled();
   }
   else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-    lift_motor.setTarget(700);
+    lift_motor.setMaxVelocity(200);
+    lift_motor.setTarget(900);
+    lift_motor.waitUntilSettled();
   }
   else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
     lift.move_velocity(200); // up
   }
   else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
     lift.move_velocity(-120); // up
+  }
+  else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_UP)){
+    lift_motor.setTarget(200);
+    lift_motor.waitUntilSettled();
+    lift_motor.setTarget(0);
+    lift_motor.waitUntilSettled();
   }
   else{
     pros::c::motor_set_brake_mode(lift_port, MOTOR_BRAKE_HOLD);
@@ -284,21 +292,38 @@ void lift_task(void* param){
 
 void tray_task(void* param){
   tray_motor.setMaxVelocity(100);
+  stacking = false;
   while(true){
-    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A) || controller.get_digital(pros::E_CONTROLLER_DIGITAL_Y) || controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
-      tray_motor.setTarget(300);
+    if(!stacking){
+    if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
+      tray_motor.setMaxVelocity(200);
+      tray_motor.setTarget(550);
+      tray_motor.waitUntilSettled();
   }
+  else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
+    tray_motor.setMaxVelocity(200);
+    tray_motor.setTarget(550);
+    tray_motor.waitUntilSettled();
+}
   else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-    tray.move_velocity(200); // up
+    tray.move_velocity(100); // up
+
   }
-  else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
-    tray.move_velocity(-200); // up
+  else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_DOWN) || stacking){
+    std::string param3("stack");
+  	pros::Task task3(stack,&param3);
+  }
+  else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+      tray.move_velocity(-100); // up
   }
   else{
-    pros::c::motor_set_brake_mode(tray_port, MOTOR_BRAKE_HOLD);
+    // pros::c::motor_set_brake_mode(tray_port, MOTOR_BRAKE_HOLD);
+    // pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_HOLD);
+    // pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_HOLD);
     tray.move_velocity(0);
   }
 
+}
   pros::delay(10);
 }
 
