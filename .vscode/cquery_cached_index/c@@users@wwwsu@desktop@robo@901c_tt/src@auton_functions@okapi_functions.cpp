@@ -31,14 +31,18 @@ void one_point_lmao(){
 
 void flipout(){
   lift_motor.setTarget(400);
-  tray_motor.setTarget(200);
+  tray_motor.setTarget(240);
   tray_motor.waitUntilSettled();
   lift_motor.setTarget(600);
   lift_motor.waitUntilSettled();
   pros::delay(400);
+  tray_motor.setMaxVelocity(60);
   lift_motor.setTarget(0);
   tray_motor.setTarget(0);
   lift_motor.waitUntilSettled();
+  lift.move_velocity(-100);
+  pros::delay(200);
+  lift.move_velocity(0);
 }
 
 void pushy(){
@@ -62,6 +66,7 @@ void stack(void *param){
   intakeL.move_velocity(0);
   pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_COAST);
   pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_COAST);
+  tray_motor.setMaxVelocity(100);
   tray_motor.setTarget(1200);
   tray_motor.waitUntilSettled();
   stacking = false;
@@ -115,7 +120,7 @@ void rnjesus_redskills(){
   pros::delay(50); // delay for a bit
 
   tare();
-  chassis.turnAngle(130_deg); // turn to stack
+  chassis.turnAngle(125_deg); // turn to stack
   chassis.waitUntilSettled();
 
   pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_COAST);
@@ -126,6 +131,7 @@ void rnjesus_redskills(){
   chassis.moveDistance(-11.5_in); // move forwards to align stack
   chassis.waitUntilSettled();
 
+  tray_motor.setMaxVelocity(80);
   tray_motor.setTarget(1200);
   tray_motor.waitUntilSettled();
   run_for(-40,1000);
@@ -134,21 +140,47 @@ void rnjesus_redskills(){
   tray_motor.setTarget(1050);
   pros::delay(300);
   chassis.moveDistance(10_in);
-  chassis.waitUntilSettled();
   tray_motor.setTarget(10);
-  pros::delay(2000);
+  tray_motor.waitUntilSettled();
   chassis.waitUntilSettled();
   intakeL.move_velocity(0);
   intakeR.move_velocity(0);
 
 
   // after stacking
-  chassis.moveDistance(10_in);
+  chassis.moveDistance(8_in);
   chassis.waitUntilSettled();
   chassis.turnAngle(140_deg);
   chassis.waitUntilSettled();
-  chassis.moveDistance(-20_in);
+  intakeL.move_velocity(-100);
+  intakeR.move_velocity(-100);
+  chassis.moveDistance(-18_in);
   chassis.waitUntilSettled();
+  run_for(-50, 600);
+  pros::delay(1000); // wait for intake
+  intakeL.move_velocity(0);
+  intakeR.move_velocity(0);
+  pros::delay(400);
+  intakeL.move_velocity(100);
+  intakeR.move_velocity(100);
+  pros::delay(400);
+  intakeL.move_velocity(0);
+  intakeR.move_velocity(0);
+
+
+  lift_motor.setMaxVelocity(200);
+  lift_motor.setTarget(1100);
+  tray_motor.setMaxVelocity(200);
+  tray_motor.setTarget(550);
+  lift_motor.waitUntilSettled();
+  tray_motor.waitUntilSettled();
+  chassis.moveDistance(-7_in);
+  intakeL.move_velocity(80);
+  intakeR.move_velocity(80);
+  pros::delay(1000);
+  intakeL.move_velocity(0);
+  intakeR.move_velocity(0);
+
 
 }
 
@@ -158,12 +190,12 @@ void lift_task(void* param){
   while(true){
     if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
       lift_motor.setMaxVelocity(200);
-      lift_motor.setTarget(1160);
+      lift_motor.setTarget(1100);
       lift_motor.waitUntilSettled();
   }
   else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)){
     lift_motor.setMaxVelocity(200);
-    lift_motor.setTarget(900);
+    lift_motor.setTarget(860);
     lift_motor.waitUntilSettled();
   }
   else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1) && controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)){
@@ -218,7 +250,7 @@ void tray_task(void* param){
     tray_motor.waitUntilSettled();
   }
   else if(controller.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
-      tray.move_velocity(-100); // up
+      tray.move_velocity(-200); // up
   }
   else{
     // pros::c::motor_set_brake_mode(tray_port, MOTOR_BRAKE_HOLD);

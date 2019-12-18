@@ -85,8 +85,8 @@ void opcontrol() {
 
 	      pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_HOLD);
 	      pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_HOLD);
-				intakeL.move_velocity(200); // moves out
-				intakeR.move_velocity(200); // moves out
+				intakeL.move_velocity(80); // moves out
+				intakeR.move_velocity(80); // moves out
 			}
 			else if(r1){
 				pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_HOLD);
