@@ -13,7 +13,7 @@ void opcontrol() {
 	int left;
 	bool flipped = false;
 
-	flipout(); flipped = true;
+//	flipout(); flipped = true;
 
 	std::string param1("lift");
 	std::string param2("tray");

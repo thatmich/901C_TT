@@ -25,5 +25,5 @@ void autonomous() {
   pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
   pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
   pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
-  rnjesus_redskills();
+  rnjesus_red();
 }
