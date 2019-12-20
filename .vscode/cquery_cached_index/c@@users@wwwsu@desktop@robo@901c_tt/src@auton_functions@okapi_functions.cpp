@@ -84,7 +84,7 @@ void run_for(int speed, int time){
   backR.move_velocity(0);
 }
 
-void rnjesus_red(){
+void rnjesus_red_unpro(){
   // setup
   // move forward is negative, move backwards is positive
   chassis.setMaxVelocity(80);
@@ -107,20 +107,173 @@ void rnjesus_red(){
   // goes back
   chassis.setMaxVelocity(80);
   tare();
-  chassis.moveDistance(48_in);
+  chassis.moveDistance(28_in);
   chassis.waitUntilSettled();
-  run_for(100, 500);
-
-
-  chassis.setMaxVelocity(50);
-  tare();
-  chassis.moveDistance(-24_in);
-  chassis.waitUntilSettled();
-
-  pros::delay(50); // delay for a bit
 
   tare();
   chassis.turnAngle(125_deg); // turn to stack
+  chassis.waitUntilSettled();
+
+  pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_COAST);
+  pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_COAST);
+  intakeL.move_relative(300, 100);
+  intakeR.move_relative(300, 100);
+
+  chassis.moveDistance(-12.5_in); // move forwards to align stack
+  chassis.waitUntilSettled();
+
+  tray_motor.setMaxVelocity(80);
+  tray_motor.setTarget(1200);
+  tray_motor.waitUntilSettled();
+  run_for(-40,1000);
+  pros::delay(200);
+  tare();
+  tray_motor.setTarget(1050);
+  pros::delay(300);
+  chassis.moveDistance(11_in);
+  tray_motor.setTarget(10);
+  tray_motor.waitUntilSettled();
+  chassis.waitUntilSettled();
+  intakeL.move_velocity(0);
+  intakeR.move_velocity(0);
+}
+
+void rnjesus_blue_unpro(){
+  // setup
+  // move forward is negative, move backwards is positive
+  chassis.setMaxVelocity(80);
+  tare();
+  pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_HOLD);
+  pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_HOLD);
+
+  // move forwards
+  intakeL.move_velocity(-200); // moves in
+  intakeR.move_velocity(-200); // moves in
+  chassis.moveDistance(-52_in);
+  chassis.waitUntilSettled();
+
+  pros::delay(200); // delay for last cube to get sucked in
+
+  // stops intakes
+  intakeL.move_velocity(0);
+  intakeR.move_velocity(0);
+
+  // goes back
+  chassis.setMaxVelocity(80);
+  tare();
+  chassis.moveDistance(28_in);
+  chassis.waitUntilSettled();
+
+  tare();
+  chassis.turnAngle(-125_deg); // turn to stack
+  chassis.waitUntilSettled();
+
+  pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_COAST);
+  pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_COAST);
+  intakeL.move_relative(300, 100);
+  intakeR.move_relative(300, 100);
+
+  chassis.moveDistance(-12.5_in); // move forwards to align stack
+  chassis.waitUntilSettled();
+
+  tray_motor.setMaxVelocity(80);
+  tray_motor.setTarget(1200);
+  tray_motor.waitUntilSettled();
+  run_for(-40,1000);
+  pros::delay(200);
+  tare();
+  tray_motor.setTarget(1050);
+  pros::delay(300);
+  chassis.moveDistance(11_in);
+  tray_motor.setTarget(10);
+  tray_motor.waitUntilSettled();
+  chassis.waitUntilSettled();
+  intakeL.move_velocity(0);
+  intakeR.move_velocity(0);
+}
+
+void rnjesus_blue_pro(){
+  // setup
+  // move forward is negative, move backwards is positive
+  chassis.setMaxVelocity(80);
+  tare();
+  pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_HOLD);
+  pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_HOLD);
+
+  // move forwards
+  intakeL.move_velocity(-200); // moves in
+  intakeR.move_velocity(-200); // moves in
+  chassis.moveDistance(-52_in);
+  chassis.waitUntilSettled();
+
+  pros::delay(200); // delay for last cube to get sucked in
+
+  // stops intakes
+  intakeL.move_velocity(0);
+  intakeR.move_velocity(0);
+
+  // goes back
+  chassis.setMaxVelocity(80);
+  tare();
+  chassis.moveDistance(28_in);
+  chassis.waitUntilSettled();
+
+  tare();
+  chassis.turnAngle(125_deg); // turn to stack
+  chassis.waitUntilSettled();
+
+  pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_COAST);
+  pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_COAST);
+  intakeL.move_relative(300, 100);
+  intakeR.move_relative(300, 100);
+
+  chassis.moveDistance(-12.5_in); // move forwards to align stack
+  chassis.waitUntilSettled();
+
+  tray_motor.setMaxVelocity(80);
+  tray_motor.setTarget(1200);
+  tray_motor.waitUntilSettled();
+  run_for(-40,1000);
+  pros::delay(200);
+  tare();
+  tray_motor.setTarget(1050);
+  pros::delay(300);
+  chassis.moveDistance(11_in);
+  tray_motor.setTarget(10);
+  tray_motor.waitUntilSettled();
+  chassis.waitUntilSettled();
+  intakeL.move_velocity(0);
+  intakeR.move_velocity(0);
+}
+
+void rnjesus_red_pro(){
+  // setup
+  // move forward is negative, move backwards is positive
+  chassis.setMaxVelocity(80);
+  tare();
+  pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_HOLD);
+  pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_HOLD);
+
+  // move forwards
+  intakeL.move_velocity(-200); // moves in
+  intakeR.move_velocity(-200); // moves in
+  chassis.moveDistance(-52_in);
+  chassis.waitUntilSettled();
+
+  pros::delay(200); // delay for last cube to get sucked in
+
+  // stops intakes
+  intakeL.move_velocity(0);
+  intakeR.move_velocity(0);
+
+  // goes back
+  chassis.setMaxVelocity(80);
+  tare();
+  chassis.moveDistance(28_in);
+  chassis.waitUntilSettled();
+
+  tare();
+  chassis.turnAngle(-125_deg); // turn to stack
   chassis.waitUntilSettled();
 
   pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_COAST);

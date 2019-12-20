@@ -1,6 +1,7 @@
 #include "main.h"
 #include "configure/config.h" // motor ports
 #include "auton_functions/auton_functions.h"
+#include "graphics/lvgl_functions.h"
 
 void opcontrol() {
 	int left_joystick;
@@ -12,8 +13,9 @@ void opcontrol() {
 	int right;
 	int left;
 	bool flipped = false;
-
-//	flipout(); flipped = true;
+	if(autonNo == 3 || autonNo == 5){
+		flipout(); flipped = true;
+	}
 
 	std::string param1("lift");
 	std::string param2("tray");
@@ -104,11 +106,6 @@ void opcontrol() {
 				intakeL.move_velocity(0); // stops
 				intakeR.move_velocity(0); // stops
 			}
-
-
-
-
-
 
 		// assign left and right values to the motors
 

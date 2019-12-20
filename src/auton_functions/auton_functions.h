@@ -4,9 +4,13 @@ void one_point_lmao();
 
 void flipout();
 
-void rnjesus_red();
+void rnjesus_red_unpro();
 
-void rnjesus_blue();
+void rnjesus_red_pro();
+
+void rnjesus_blue_unpro();
+
+void rnjesus_blue_pro();
 
 void rnjesus_redskills();
 
