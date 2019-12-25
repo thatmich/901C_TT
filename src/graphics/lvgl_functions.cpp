@@ -5,12 +5,12 @@
 lv_obj_t * scr = lv_obj_create(NULL,NULL);
 lv_obj_t * main_label =  lv_label_create(scr, NULL);
 
-int autonNo = 1;
+int autonNo = 8;
 
 void setup(){
   lv_scr_load(scr);
   lv_label_set_recolor(main_label, true);
-  lv_label_set_text(main_label, "#ff0000 Red Unprotected# #ffffff Auton#");
+  lv_label_set_text(main_label, "#ffffff Driver Practice, No auton#");
   lv_obj_align(main_label, NULL, LV_ALIGN_CENTER, 0, 0);
 }
 
@@ -39,7 +39,10 @@ void switch_auton(){
     case 7:
       lv_label_set_text(main_label, "Programming Skills");
       break;
-    case 8:
+      case 8:
+        lv_label_set_text(main_label, "Drive Practice, no flipout");
+        break;
+    case 9:
       lv_label_set_text(main_label, "#ff0000 Red Unprotected# #ffffff Auton#");
       autonNo = 1;
       break;

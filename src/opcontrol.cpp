@@ -13,7 +13,7 @@ void opcontrol() {
 	int right;
 	int left;
 	bool flipped = false;
-	if(autonNo == 3 || autonNo == 5){
+	if(autonNo == 6 || autonNo == 5){
 		flipout(); flipped = true;
 	}
 

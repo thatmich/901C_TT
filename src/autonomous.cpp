@@ -76,7 +76,11 @@ void autonomous() {
       pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
       pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
       pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
+
+      pros::delay(100);
       flipout();
+
+      pros::delay(200);
       pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_BRAKE);
       pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
       pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
