@@ -13,10 +13,6 @@ auto chassis = ChassisControllerFactory::create(
   {WHEEL_DIAMETER, CHASSIS_WIDTH}
 );
 
-auto lift_motor = AsyncControllerFactory::posIntegrated(lift_port);
-auto tray_motor = AsyncControllerFactory::posIntegrated(tray_port);
-
-bool stacking;
 
 void one_point_lmao(){
   chassis.setMaxVelocity(80);
@@ -28,6 +24,12 @@ void one_point_lmao(){
   pros::delay(1000);
   chassis.moveDistance(50_cm);
 }
+
+
+auto lift_motor = AsyncControllerFactory::posIntegrated(lift_port);
+auto tray_motor = AsyncControllerFactory::posIntegrated(tray_port);
+
+bool stacking;
 
 void flipout(){
   lift_motor.setTarget(400);

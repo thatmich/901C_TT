@@ -33,10 +33,10 @@ void opcontrol() {
 		l2 = controller.get_digital(DIGITAL_L2);
 
 		// declares motor stop type
-		pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_BRAKE);
-		pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
-		pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
-		pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
+		pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_COAST);
+		pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_COAST);
+		pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_COAST);
+		pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_COAST);
 
 		pros::c::motor_set_brake_mode(lift_port, MOTOR_BRAKE_HOLD);
 		pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_COAST);
@@ -73,22 +73,12 @@ void opcontrol() {
 			left = 0;
 			right = 0;
 		}
-
-		// if(shift && r2){
-		// 	lift.move_velocity(150); // moves up
-		// }
-		// else if(r2){
-		// 	lift.move_velocity(-100);
-		// }
-		// else{
-		// 	lift.move_velocity(0);
-		// }
 			if(shift && r1){
 
 	      pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_HOLD);
 	      pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_HOLD);
-				intakeL.move_velocity(80); // moves out
-				intakeR.move_velocity(80); // moves out
+				 intakeL.move_velocity(80); // moves out
+				 intakeR.move_velocity(80); // moves out
 			}
 			else if(r1){
 				pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_HOLD);
