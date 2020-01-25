@@ -550,3 +550,14 @@ void tray_task(void* param){
 }
 
 }
+
+void printValues()
+{
+  printf("front left = %lf \n", frontL.get_actual_velocity());
+  printf("front right = %lf \n", frontR.get_actual_velocity());
+  printf("back left = %lf \n", backL.get_actual_velocity());
+  printf("back right = %lf \n", backR.get_actual_velocity());
+  printf("\n");
+  printf("");
+  pros::Task::delay(5);
+}
