@@ -25,19 +25,25 @@ void opcontrol() {
 		flipout(); flipped = true;
 	}
 
+/* ---------- DECLARE TASKS -------------*/
 	std::string param1("lift");
 	std::string param2("tray");
 	pros::Task task1(lift_task,&param1);
 	pros::Task task2(tray_task,&param2);
 
+	/* ---------- SETUP FILES FOR OUTPUT -------------*/
+
 	ofstream myfile;
 	myfile.open("example.txt");
+
+	/* ---------- MAIN LOOP -------------*/
 
 	while (true) {
 
 		//Won's boosted printing velocity values
 		printValues();
 
+		/* ---------- DRIVE CODE -------------*/
 		// declares joystick values
 		left_joystick = controller.get_analog(ANALOG_LEFT_Y);
 		right_joystick = controller.get_analog(ANALOG_RIGHT_X);
@@ -52,15 +58,17 @@ void opcontrol() {
 		pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_COAST);
 		pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_COAST);
 
-		pros::c::motor_set_brake_mode(lift_port, MOTOR_BRAKE_HOLD);
-		pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_COAST);
-		pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_COAST);
+		// revamped driver control, power of 2. see
+		// https://www.desmos.com/calculator/vxnfti5dbk for drive graph
 
+		// throttle is left y, turn is right x
 		throttle = -1.5* pow(left_joystick/127, 2);
 		turn = -1.5* pow(right_joystick/127, 2);
 		left = throttle + turn;
 		right = throttle - turn;
 
+		// if too high, set to 200 rpm
+		// if accidentally pressed (less than 800), don't move
 		if(left > 12000){
 			left = 12000;
 		}
@@ -80,11 +88,16 @@ void opcontrol() {
 			right = 0;
 		}
 
-
+		// assign values
 		frontL.move_voltage(left);
 		backL.move_voltage(left);
 		frontR.move_voltage(right);
 		backR.move_voltage(right);
+
+
+		pros::c::motor_set_brake_mode(lift_port, MOTOR_BRAKE_HOLD);
+		pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_COAST);
+		pros::c::motor_set_brake_mode(intakeL_port, MOTOR_BRAKE_COAST);
 
 
 			if(shift && r1){

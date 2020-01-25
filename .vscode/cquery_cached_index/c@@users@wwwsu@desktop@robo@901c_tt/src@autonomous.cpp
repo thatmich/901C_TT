@@ -15,7 +15,7 @@
  * from where it left off.
  */
 void autonomous() {
-  tray.tare_position();
+  tray.tare_position(); // Michio's PID Testing
   tilterPID(720, 1);
   pros::delay(1000);
   printf("Tilter = %lf\n", tray.get_position());
