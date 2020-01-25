@@ -15,78 +15,83 @@
  * from where it left off.
  */
 void autonomous() {
-
-  switch (autonNo){
-    case 1:
-    pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
-    pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
-    pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
-    pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
-    flipout();
-    pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_BRAKE);
-    pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
-    pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
-    pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
-      rnjesus_red_unpro();
-      break;
-    case 2:
-    pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
-    pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
-    pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
-    pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
-    flipout();
-    pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_BRAKE);
-    pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
-    pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
-    pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
-      rnjesus_blue_unpro();
-      break;
-    case 3:
-    pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
-    pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
-    pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
-    pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
-    flipout();
-    pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_BRAKE);
-    pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
-    pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
-    pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
-      rnjesus_red_pro();
-      break;
-    case 4:
-    pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
-    pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
-    pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
-    pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
-    flipout();
-    pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_BRAKE);
-    pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
-    pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
-    pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
-      rnjesus_blue_pro();
-      break;
-    case 5:
-      one_point_lmao();
-      break;
-    case 6:
-      break;
-    case 7: // prog skills
-      pushy();
-      pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
-      pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
-      pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
-      pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
-
-      pros::delay(100);
-      flipout();
-
-      pros::delay(200);
-      pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_BRAKE);
-      pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
-      pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
-      pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
-      rnjesus_redskills();
-      break;
-
-  }
+  tray.tare_position();
+  tilterPID(720, 1);
+  pros::delay(1000);
+  printf("Tilter = %lf\n", tray.get_position());
+  printf("Velocity = %lf\n", tray.get_actual_velocity());
+//  tilterPID(0, 4);
+  // switch (autonNo){
+  //   case 1:
+  //   pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
+  //   pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
+  //   pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
+  //   pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
+  //   flipout();
+  //   pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_BRAKE);
+  //   pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
+  //   pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
+  //   pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
+  //     rnjesus_red_unpro();
+  //     break;
+  //   case 2:
+  //   pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
+  //   pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
+  //   pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
+  //   pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
+  //   flipout();
+  //   pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_BRAKE);
+  //   pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
+  //   pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
+  //   pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
+  //     rnjesus_blue_unpro();
+  //     break;
+  //   case 3:
+  //   pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
+  //   pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
+  //   pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
+  //   pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
+  //   flipout();
+  //   pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_BRAKE);
+  //   pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
+  //   pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
+  //   pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
+  //     rnjesus_red_pro();
+  //     break;
+  //   case 4:
+  //   pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
+  //   pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
+  //   pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
+  //   pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
+  //   flipout();
+  //   pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_BRAKE);
+  //   pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
+  //   pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
+  //   pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
+  //     rnjesus_blue_pro();
+  //     break;
+  //   case 5:
+  //     one_point_lmao();
+  //     break;
+  //   case 6:
+  //     break;
+  //   case 7: // prog skills
+  //     pushy();
+  //     pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
+  //     pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
+  //     pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
+  //     pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
+  //
+  //     pros::delay(100);
+  //     flipout();
+  //
+  //     pros::delay(200);
+  //     pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_BRAKE);
+  //     pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_BRAKE);
+  //     pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_BRAKE);
+  //     pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_BRAKE);
+  //     rnjesus_redskills();
+  //     break;
+  //
+  // }
 }

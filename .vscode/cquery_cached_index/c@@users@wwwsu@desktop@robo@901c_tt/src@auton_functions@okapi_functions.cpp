@@ -26,10 +26,10 @@ void one_point_lmao(){
 }
 
 
+bool stacking;
+
 auto lift_motor = AsyncControllerFactory::posIntegrated(lift_port);
 auto tray_motor = AsyncControllerFactory::posIntegrated(tray_port);
-
-bool stacking;
 
 void flipout(){
   lift_motor.setTarget(400);
@@ -96,7 +96,7 @@ void pushy(){
   run_for(50, 1200);
 }
 
-void rnjesus_red_unpro(){
+void red_unpro(){
   // setup
   // move forward is negative, move backwards is positive
   chassis.setMaxVelocity(80);

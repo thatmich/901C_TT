@@ -23,3 +23,7 @@ void lift_task(void* param);
 void tray_task(void* param);
 
 extern bool stacking;
+
+void max_acceleration();
+
+void tilterPID(float target, float threshold);
