@@ -5,6 +5,10 @@
 #include "auton_functions/auton_functions.h"
 #include "graphics/lvgl_functions.h"
 
+#include <iostream>
+#include <fstream>
+using namespace std;
+
 void opcontrol() {
 	int left_joystick;
 	int right_joystick;
@@ -26,7 +30,13 @@ void opcontrol() {
 	pros::Task task1(lift_task,&param1);
 	pros::Task task2(tray_task,&param2);
 
+	ofstream myfile;
+	myfile.open("example.txt");
+
 	while (true) {
+
+		//Won's boosted printing velocity values
+		printValues();
 
 		// declares joystick values
 		left_joystick = controller.get_analog(ANALOG_LEFT_Y);
@@ -107,6 +117,7 @@ void opcontrol() {
 		frontR.move_velocity(right);
 		backL.move_velocity(left);
 		backR.move_velocity(right);
+
 
 		// delay to prevent running this while loop too much
 		pros::delay(20);

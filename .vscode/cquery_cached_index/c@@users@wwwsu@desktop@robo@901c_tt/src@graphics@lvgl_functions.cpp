@@ -10,7 +10,7 @@ int autonNo = 8;
 void setup(){
   lv_scr_load(scr);
   lv_label_set_recolor(main_label, true);
-  lv_label_set_text(main_label, "#ffffff Driver Practice, No auton#");
+  lv_label_set_text(main_label, "#ffffff MichiBruh#");
   lv_obj_align(main_label, NULL, LV_ALIGN_CENTER, 0, 0);
 }
 

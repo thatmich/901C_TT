@@ -22,6 +22,8 @@ void lift_task(void* param);
 
 void tray_task(void* param);
 
+void printValues();
+
 extern bool stacking;
 
 void max_acceleration();
