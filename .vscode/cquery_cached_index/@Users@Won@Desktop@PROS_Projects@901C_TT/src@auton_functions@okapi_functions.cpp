@@ -555,13 +555,8 @@ int t = 0;
 
 void printValues()
 {
-  /*printf("front left = %lf \n", frontL.get_actual_velocity());
-  printf("front right = %lf \n", frontR.get_actual_velocity());
-  printf("back left = %lf \n", backL.get_actual_velocity());
-  printf("back right = %lf \n", backR.get_actual_velocity());*/
   printf("%d %lf", t, frontL.get_actual_velocity());
   printf("\n");
   printf("");
   t += 5;
-  pros::Task::delay(5);
 }
