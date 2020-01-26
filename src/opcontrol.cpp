@@ -5,10 +5,6 @@
 #include "auton_functions/auton_functions.h"
 #include "graphics/lvgl_functions.h"
 
-#include <iostream>
-#include <fstream>
-using namespace std;
-
 void opcontrol() {
 	int left_joystick;
 	int right_joystick;
@@ -31,10 +27,9 @@ void opcontrol() {
 	pros::Task task1(lift_task,&param1);
 	pros::Task task2(tray_task,&param2);
 
-	/* ---------- SETUP FILES FOR OUTPUT -------------*/
-
-	ofstream myfile;
-	myfile.open("example.txt");
+	/* Print time and velocity */
+	printf("Time Velocity");
+	printf("\n");
 
 	/* ---------- MAIN LOOP -------------*/
 

@@ -25,3 +25,7 @@ void tray_task(void* param);
 void printValues();
 
 extern bool stacking;
+
+void max_acceleration();
+
+void tilterPID(float target, float threshold);

@@ -10,6 +10,7 @@
 
 
 void initialize() {
+  /* ---------- LIMIT SWITCH AUTON SELECTOR SETUP -------------*/
   setup();
   std::string param3("auton_limit");
 	pros::Task task1(limit_detection_task,&param3);
