@@ -563,5 +563,5 @@ void printValues()
   printf("\n");
   printf("");
   t += 5;
-  pros::Task::delay(5);
+  
 }
