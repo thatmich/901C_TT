@@ -5,17 +5,23 @@
 #include "auton_functions/auton_functions.h"
 #include "graphics/lvgl_functions.h"
 
+
 void opcontrol() {
+	const int joydead = 800;
+	const double joyExp = 2;
+	const double joyMultiplier = -1.5;
 	int left_joystick;
 	int right_joystick;
-	int throttle;
-	int turn;
+	float throttle;
+	float turn;
 	bool shift;
 	bool r1;
 	bool r2;
 	bool l2;
-	int right;
-	int left;
+	float right;
+	float left;
+	float tempL;
+	float tempR;
 	bool flipped = false;
 	if(autonNo == 6 || autonNo == 5){
 		flipout(); flipped = true;
