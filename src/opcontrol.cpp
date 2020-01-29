@@ -5,11 +5,12 @@
 #include "auton_functions/auton_functions.h"
 #include "graphics/lvgl_functions.h"
 
-
+//0.017 3
 void opcontrol() {
-	const int joydead = 800;
-	const double joyExp = 2;
-	const double joyMultiplier = -1.5;
+	const int joydead = 8; // percentage of joystick. 8% rn
+	const double joyExp = 3; // has to be positive
+	const double joyMultiplier = -0.017; // has to be negative
+	const double turn_multiplier = 1;
 	int left_joystick;
 	int right_joystick;
 	float throttle;
@@ -42,7 +43,7 @@ void opcontrol() {
 	while (true) {
 
 		//Won's boosted printing velocity values
-		printValues();
+		//printValues();
 
 		/* ---------- DRIVE CODE -------------*/
 		// declares joystick values
@@ -63,10 +64,52 @@ void opcontrol() {
 		// https://www.desmos.com/calculator/vxnfti5dbk for drive graph
 
 		// throttle is left y, turn is right x
-		throttle = -1.5* pow(left_joystick/127, 2);
-		turn = -1.5* pow(right_joystick/127, 2);
+		tempL = 100*(left_joystick/127.0);
+		tempR = 100*(right_joystick/127.0);
+		printf("tempL: %f\n", tempL);
+		if(tempL > joydead){
+			throttle = joyMultiplier * pow(tempL, joyExp);
+			printf("Throttle: %f\n", throttle);
+		}
+		else if(tempL < -joydead){
+			tempL = -tempL;
+			throttle = joyMultiplier * pow(tempL, joyExp);
+			throttle = -throttle;
+			printf("Throttle: %f\n", throttle);
+		}
+		else{
+			throttle = 0;
+		}
+
+		if(tempR >= joydead){
+			turn = joyMultiplier * pow(tempR, joyExp);
+			printf("Turn: %f\n", turn);
+		}
+		else if(tempR < -joydead){
+			tempR = -tempR;
+			turn = joyMultiplier * pow(tempR, joyExp);
+			turn = -turn*turn_multiplier;
+			printf("Turn: %f\n", turn);
+		}
+		else{
+			turn = 0;
+		}
+
+
 		left = throttle + turn;
 		right = throttle - turn;
+
+
+		printf("Left: %f\n", left);
+		printf("Right: %f\n", right);
+
+		// assign left and right values to the motors
+
+		frontL.move_voltage(left);
+		frontR.move_voltage(right);
+		backL.move_voltage(left);
+		backR.move_voltage(right);
+
 
 		// if too high, set to 200 rpm
 		// if accidentally pressed (less than 800), don't move
@@ -97,34 +140,34 @@ void opcontrol() {
 
 		// if both joysticks are between 120 to 127, move forward and
 		// turn at maximum speed
-		if(abs(left_joystick)>= 120 && abs(right_joystick) >= 120){
-			left = 1.6*(-left_joystick - right_joystick);
-			right = 1.6*(-left_joystick + right_joystick);
-		}
-
-		// if only left joysticks is between 120 to 127, move forward at max speed,
-		// turn at half speed
-		// even if right joystick i
-		else if(abs(left_joystick)>= 120){
-			left = 1.6*(-left_joystick) - 0.8*right_joystick;
-			right = 1.6*(-left_joystick) + 0.8*right_joystick;
-		}
-
-		// if only left joysticks is between 120 to 127, move forward at max speed,
-		// turn at half speed
-		else if(abs(left_joystick)>= 30 || abs(right_joystick) >= 30){
-			left = 0.8*(-left_joystick - right_joystick);
-			right = 0.8*(-left_joystick + right_joystick);
-		}
-		// move very slow when between 10 and 30
-		else if(abs(left_joystick)>= 10 || abs(right_joystick) >= 10){
-			left = 0.5*(-left_joystick - right_joystick);
-			right = 0.5*(-left_joystick + right_joystick);
-		}
-		else{
-			left = 0;
-			right = 0;
-		}
+		// if(abs(left_joystick)>= 120 && abs(right_joystick) >= 120){
+		// 	left = 1.6*(-left_joystick - right_joystick);
+		// 	right = 1.6*(-left_joystick + right_joystick);
+		// }
+		//
+		// // if only left joysticks is between 120 to 127, move forward at max speed,
+		// // turn at half speed
+		// // even if right joystick i
+		// else if(abs(left_joystick)>= 120){
+		// 	left = 1.6*(-left_joystick) - 0.8*right_joystick;
+		// 	right = 1.6*(-left_joystick) + 0.8*right_joystick;
+		// }
+		//
+		// // if only left joysticks is between 120 to 127, move forward at max speed,
+		// // turn at half speed
+		// else if(abs(left_joystick)>= 30 || abs(right_joystick) >= 30){
+		// 	left = 0.8*(-left_joystick - right_joystick);
+		// 	right = 0.8*(-left_joystick + right_joystick);
+		// }
+		// // move very slow when between 10 and 30
+		// else if(abs(left_joystick)>= 10 || abs(right_joystick) >= 10){
+		// 	left = 0.5*(-left_joystick - right_joystick);
+		// 	right = 0.5*(-left_joystick + right_joystick);
+		// }
+		// else{
+		// 	left = 0;
+		// 	right = 0;
+		// }
 
 		pros::c::motor_set_brake_mode(lift_port, MOTOR_BRAKE_HOLD);
 		pros::c::motor_set_brake_mode(intakeR_port, MOTOR_BRAKE_COAST);
@@ -155,12 +198,7 @@ void opcontrol() {
 				intakeR.move_velocity(0); // stops
 			}
 
-		// assign left and right values to the motors
 
-		frontL.move_velocity(left);
-		frontR.move_velocity(right);
-		backL.move_velocity(left);
-		backR.move_velocity(right);
 
 
 		// delay to prevent running this while loop too much
