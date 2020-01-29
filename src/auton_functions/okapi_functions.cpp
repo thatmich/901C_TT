@@ -560,3 +560,18 @@ void printValues()
   printf("");
   t += 5;
 }
+
+int slewRate(int currentSpeed, int requestedSpeed)
+{
+  if(requestedSpeed < currentSpeed)
+  {
+    currentSpeed--;
+  }
+
+  else if(requestedSpeed > currentSpeed)
+  {
+    currentSpeed++;
+  }
+
+  return currentSpeed;
+}
