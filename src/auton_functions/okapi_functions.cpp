@@ -555,8 +555,23 @@ int t = 0;
 
 void printValues()
 {
-  printf("%d %lf", t, frontL.get_actual_velocity());
+  printf("%d %lf", t, -(frontL.get_actual_velocity()));
   printf("\n");
   printf("");
   t += 5;
+}
+
+int slewRate(int currentSpeed, int requestedSpeed)
+{
+  if(requestedSpeed < currentSpeed)
+  {
+    currentSpeed--;
+  }
+
+  else if(requestedSpeed > currentSpeed)
+  {
+    currentSpeed++;
+  }
+
+  return currentSpeed;
 }
