@@ -10,7 +10,7 @@ void opcontrol() {
 	const int joydead = 8; // percentage of joystick. 8% rn
 	const double joyExp = 3; // has to be positive
 	const double joyMultiplier = -0.017; // has to be negative
-	const double turn_multiplier = 1;
+	const double turn_multiplier = 0.6;
 	int left_joystick;
 	int right_joystick;
 	float throttle;
@@ -24,16 +24,20 @@ void opcontrol() {
 	float tempL;
 	float tempR;
 	bool flipped = false;
-	bool hold = false;
+	bool holding = false;
+	pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_COAST);
+	pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_COAST);
+	pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_COAST);
+	pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_COAST);
 	if(autonNo == 6 || autonNo == 5){
 		flipout(); flipped = true;
 	}
 
 /* ---------- DECLARE TASKS -------------*/
-	std::string param1("lift");
-	std::string param2("tray");
-	pros::Task task1(lift_task,&param1);
-	pros::Task task2(tray_task,&param2);
+	// std::string param1("lift");
+	// std::string param2("tray");
+	// pros::Task task1(lift_task,&param1);
+	// pros::Task task2(tray_task,&param2);
 
 
 	/* ---------- MAIN LOOP -------------*/
@@ -42,6 +46,22 @@ void opcontrol() {
 
 		//Won's boosted printing velocity values
 		//printValues();
+		if(controller.get_digital_new_press(DIGITAL_UP) == 1 && controller.get_digital_new_press(DIGITAL_DOWN) == 1){
+			if(!holding){
+				pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
+				pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
+				pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
+				pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
+				holding = true;
+			}
+			else{
+				pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_COAST);
+				pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_COAST);
+				pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_COAST);
+				pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_COAST);
+				holding = false;
+			}
+	}
 
 		/* ---------- DRIVE CODE -------------*/
 		// declares joystick values
@@ -182,23 +202,7 @@ void opcontrol() {
 				intakeR.move_velocity(0); // stops
 			}
 
-			if(controller.get_digital_new_press(DIGITAL_Y) && !hold){
-				pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
-				pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
-				pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
-				pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
-				hold = true;
-			}
-			if(controller.get_digital_new_press(DIGITAL_Y) && hold){
 
-				pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_COAST);
-				pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_COAST);
-				pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_COAST);
-				pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_COAST);
-				hold = false;
-
-			}
-			printf("Hold = %d", hold);
 
 
 
