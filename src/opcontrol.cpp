@@ -24,6 +24,7 @@ void opcontrol() {
 	float tempL;
 	float tempR;
 	bool flipped = false;
+	bool hold = false;
 	if(autonNo == 6 || autonNo == 5){
 		flipout(); flipped = true;
 	}
@@ -34,9 +35,6 @@ void opcontrol() {
 	pros::Task task1(lift_task,&param1);
 	pros::Task task2(tray_task,&param2);
 
-	/* Print time and velocity */
-	printf("Time Velocity");
-	printf("\n");
 
 	/* ---------- MAIN LOOP -------------*/
 
@@ -54,28 +52,19 @@ void opcontrol() {
 		r2 = controller.get_digital(DIGITAL_R2);
 		l2 = controller.get_digital(DIGITAL_L2);
 
-		// declares motor stop type
-		//pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_COAST);
-		//pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_COAST);
-		pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_COAST);
-		pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_COAST);
-
 		// revamped driver control, power of 2. see
 		// https://www.desmos.com/calculator/vxnfti5dbk for drive graph
 
 		// throttle is left y, turn is right x
 		tempL = 100*(left_joystick/127.0);
 		tempR = 100*(right_joystick/127.0);
-		printf("tempL: %f\n", tempL);
 		if(tempL > joydead){
 			throttle = joyMultiplier * pow(tempL, joyExp);
-			printf("Throttle: %f\n", throttle);
 		}
 		else if(tempL < -joydead){
 			tempL = -tempL;
 			throttle = joyMultiplier * pow(tempL, joyExp);
 			throttle = -throttle;
-			printf("Throttle: %f\n", throttle);
 		}
 		else{
 			throttle = 0;
@@ -83,13 +72,11 @@ void opcontrol() {
 
 		if(tempR >= joydead){
 			turn = joyMultiplier * pow(tempR, joyExp);
-			printf("Turn: %f\n", turn);
 		}
 		else if(tempR < -joydead){
 			tempR = -tempR;
 			turn = joyMultiplier * pow(tempR, joyExp);
 			turn = -turn*turn_multiplier;
-			printf("Turn: %f\n", turn);
 		}
 		else{
 			turn = 0;
@@ -99,9 +86,6 @@ void opcontrol() {
 		left = throttle + turn;
 		right = throttle - turn;
 
-
-		printf("Left: %f\n", left);
-		printf("Right: %f\n", right);
 
 		// assign left and right values to the motors
 
@@ -197,6 +181,24 @@ void opcontrol() {
 				intakeL.move_velocity(0); // stops
 				intakeR.move_velocity(0); // stops
 			}
+
+			if(controller.get_digital_new_press(DIGITAL_Y) && !hold){
+				pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);
+				pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_HOLD);
+				pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_HOLD);
+				pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_HOLD);
+				hold = true;
+			}
+			if(controller.get_digital_new_press(DIGITAL_Y) && hold){
+
+				pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_COAST);
+				pros::c::motor_set_brake_mode(frontR_port, MOTOR_BRAKE_COAST);
+				pros::c::motor_set_brake_mode(backL_port, MOTOR_BRAKE_COAST);
+				pros::c::motor_set_brake_mode(backR_port, MOTOR_BRAKE_COAST);
+				hold = false;
+
+			}
+			printf("Hold = %d", hold);
 
 
 
