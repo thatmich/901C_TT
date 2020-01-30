@@ -555,10 +555,11 @@ int t = 0;
 
 void printValues()
 {
-  printf("%d %lf", t, -(frontL.get_actual_velocity()));
+  printf("%d %lf", t, frontL.get_actual_velocity());
   printf("\n");
   printf("");
   t += 5;
+  pros::delay(5);
 }
 
 int slewRate(int currentSpeed, int requestedSpeed)

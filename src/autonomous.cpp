@@ -15,11 +15,22 @@
  * from where it left off.
  */
 void autonomous() {
-  tray.tare_position(); // Michio's PID Testing
-  tilterPID(720, 1);
-  pros::delay(1000);
-  printf("Tilter = %lf\n", tray.get_position());
-  printf("Velocity = %lf\n", tray.get_actual_velocity());
+
+  while(true)
+  {
+    printValues();
+
+    frontL.move_voltage(12000);
+    frontR.move_voltage(12000);
+    backL.move_voltage(12000);
+    backR.move_voltage(12000);
+  }
+  // tray.tare_position(); // Michio's PID Testing
+  // tilterPID(720, 1);
+  // pros::delay(1000);
+  // printf("Tilter = %lf\n", tray.get_position());
+  // printf("Velocity = %lf\n", tray.get_actual_velocity());
+
 //  tilterPID(0, 4);
   // switch (autonNo){
   //   case 1:

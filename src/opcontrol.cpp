@@ -41,7 +41,7 @@ void opcontrol() {
 	while (true) {
 
 		//Won's boosted printing velocity values
-		//printValues();
+		printValues();
 
 		/* ---------- DRIVE CODE -------------*/
 		// declares joystick values
