@@ -566,7 +566,7 @@ int currentVoltage = 0;
 
 /* function that takes in the current and requested voltage and returns the
 voltage the motor should be set at (not tested)*/
-int slewRate(int currentVoltage, int requestedVoltage)
+/*int slewRate(int currentVoltage, int requestedVoltage)
 {
   if(requestedVoltage < currentVoltage)
   {
@@ -579,10 +579,11 @@ int slewRate(int currentVoltage, int requestedVoltage)
   }
 
   return currentVoltage;
-}
+}*/
 
-/* function that accelerates the motors to a certain voltage/speed*/
-void driveVoltage(int targetVoltage)
+/* function that accelerates the motors to a certain voltage/speed
+(not tested)*/
+/*void driveVoltage(int targetVoltage)
 {
   int error = targetVoltage - frontL.get_voltage();
 
@@ -600,4 +601,21 @@ void driveVoltage(int targetVoltage)
   frontR.move_voltage(12000);
   backL.move_voltage(12000);
   backR.move_voltage(12000);
+}*/
+
+// slew rate code 2.0 (not tested)
+void slewRate(int requestedSpeed)
+{
+  for(int spd = 0; spd < requestedSpeed; spd++) // change increments
+  {
+    frontL.move_voltage(spd);
+    frontR.move_voltage(spd);
+    backL.move_voltage(spd);
+    backR.move_voltage(spd);
+  }
+
+  frontL.move_voltage(requestedSpeed);
+  frontR.move_voltage(requestedSpeed);
+  backL.move_voltage(requestedSpeed);
+  backR.move_voltage(requestedSpeed);
 }

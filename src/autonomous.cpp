@@ -20,7 +20,7 @@ void autonomous() {
   {
     printValues();
 
-    driveVoltage(12000);
+    slewRate(12000);
   }
   // tray.tare_position(); // Michio's PID Testing
   // tilterPID(720, 1);

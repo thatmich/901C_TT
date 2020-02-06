@@ -30,4 +30,4 @@ void max_acceleration();
 
 void tilterPID(float target, float threshold);
 
-void driveVoltage(int targetVoltage);
+void slewRate(int requestedSpeed);
