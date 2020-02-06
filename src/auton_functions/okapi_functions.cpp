@@ -562,17 +562,42 @@ void printValues()
   pros::delay(5);
 }
 
-int slewRate(int currentSpeed, int requestedSpeed)
+int currentVoltage = 0;
+
+/* function that takes in the current and requested voltage and returns the
+voltage the motor should be set at (not tested)*/
+int slewRate(int currentVoltage, int requestedVoltage)
 {
-  if(requestedSpeed < currentSpeed)
+  if(requestedVoltage < currentVoltage)
   {
-    currentSpeed--;
+    currentVoltage--;
   }
 
-  else if(requestedSpeed > currentSpeed)
+  else if(requestedVoltage > currentVoltage)
   {
-    currentSpeed++;
+    currentVoltage++;
   }
 
-  return currentSpeed;
+  return currentVoltage;
+}
+
+/* function that accelerates the motors to a certain voltage/speed*/
+void driveVoltage(int targetVoltage)
+{
+  int error = targetVoltage - frontL.get_voltage();
+
+  while(abs(error) > 50) // change the "50" to a certain voltage once known
+  {
+    frontL.move_voltage(slewRate(frontL.get_voltage(), error));
+    frontR.move_voltage(slewRate(frontR.get_voltage(), error));
+    backL.move_voltage(slewRate(backL.get_voltage(), error));
+    backR.move_voltage(slewRate(backR.get_voltage(), error));
+    error = targetVoltage - frontL.get_voltage();
+  }
+
+  // if close enough, set the motors to full voltage
+  frontL.move_voltage(12000);
+  frontR.move_voltage(12000);
+  backL.move_voltage(12000);
+  backR.move_voltage(12000);
 }

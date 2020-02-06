@@ -20,10 +20,7 @@ void autonomous() {
   {
     printValues();
 
-    frontL.move_voltage(12000);
-    frontR.move_voltage(12000);
-    backL.move_voltage(12000);
-    backR.move_voltage(12000);
+    driveVoltage(12000);
   }
   // tray.tare_position(); // Michio's PID Testing
   // tilterPID(720, 1);
