@@ -7,9 +7,9 @@
 
 //0.017 3
 void opcontrol() {
-	const int joydead = 8; // percentage of joystick. 8% rn
-	const double joyExp = 3; // has to be positive
-	const double joyMultiplier = -0.017; // has to be negative
+	const int joydead = 3; // percentage of joystick. 8% rn
+	const double joyExp = 2.5; // has to be positive
+	const double joyMultiplier = -0.159; // has to be negative
 	const double turn_multiplier = 0.6;
 	int left_joystick;
 	int right_joystick;

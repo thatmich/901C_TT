@@ -21,6 +21,8 @@ void autonomous() {
     printValues();
 
     slewRate(12000);
+
+    pros::delay(20);
   }
   // tray.tare_position(); // Michio's PID Testing
   // tilterPID(720, 1);

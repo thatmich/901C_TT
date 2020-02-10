@@ -604,9 +604,25 @@ voltage the motor should be set at (not tested)*/
 }*/
 
 // slew rate code 2.0 (not tested)
-void slewRate(int requestedSpeed)
+void slewIncrease(int requestedSpeed)
 {
   for(int spd = 0; spd < requestedSpeed; spd++) // change increments
+  {
+    frontL.move_voltage(spd);
+    frontR.move_voltage(spd);
+    backL.move_voltage(spd);
+    backR.move_voltage(spd);
+  }
+
+  frontL.move_voltage(requestedSpeed);
+  frontR.move_voltage(requestedSpeed);
+  backL.move_voltage(requestedSpeed);
+  backR.move_voltage(requestedSpeed);
+}
+
+void slewDecrease(int requestedSpeed)
+{
+  for(int spd = frontL.get_voltage(); spd > requestedSpeed; spd--)
   {
     frontL.move_voltage(spd);
     frontR.move_voltage(spd);
