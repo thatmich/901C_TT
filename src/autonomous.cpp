@@ -18,9 +18,10 @@ void autonomous() {
 
   while(true)
   {
-    printValues();
 
-    slewRate(12000);
+    //slewRate(12000);
+
+    printValues();
 
     pros::delay(20);
   }

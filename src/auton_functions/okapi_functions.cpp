@@ -555,7 +555,7 @@ int t = 0;
 
 void printValues()
 {
-  printf("%d %lf", t, frontL.get_actual_velocity());
+  printf("%d %f", t, frontL.get_position());
   printf("\n");
   printf("");
   t += 5;
@@ -604,6 +604,8 @@ voltage the motor should be set at (not tested)*/
 }*/
 
 // slew rate code 2.0 (not tested)
+
+double distance = 0;
 void slewIncrease(int requestedSpeed)
 {
   for(int spd = 0; spd < requestedSpeed; spd++) // change increments
