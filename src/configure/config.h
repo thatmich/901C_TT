@@ -11,6 +11,7 @@ extern pros::Motor intakeR;
 extern pros::Motor tray;
 extern pros::Motor lift;
 extern pros::ADIDigitalIn auton_limit;
+extern okapi::IntegratedEncoder efrontL;
 
 
 extern const int frontL_port;
