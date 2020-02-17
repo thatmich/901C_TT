@@ -30,4 +30,6 @@ void max_acceleration();
 
 void tilterPID(float target, float threshold);
 
-void slewRate(int requestedSpeed);
+void slewIncrease(int requestedSpeed);
+
+void slewDecrease(int requestedSpeed);

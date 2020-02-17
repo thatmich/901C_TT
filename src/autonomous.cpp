@@ -16,15 +16,26 @@
  */
 void autonomous() {
 
-  while(true)
+  slewIncrease(12000);
+
+  frontL.move_voltage(12000);
+  frontR.move_voltage(12000);
+  backL.move_voltage(12000);
+  backR.move_voltage(12000);
+  pros::delay(500);
+
+  efrontL.reset();
+  slewDecrease(0);
+  printf("%f", efrontL.get());
+
+  /*while(true)
   {
 
     //slewRate(12000);
 
-    printValues();
+    // printValues();
 
-    pros::delay(20);
-  }
+  }*/
   // tray.tare_position(); // Michio's PID Testing
   // tilterPID(720, 1);
   // pros::delay(1000);

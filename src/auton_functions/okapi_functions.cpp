@@ -638,3 +638,26 @@ void slewDecrease(int requestedSpeed)
   backL.move_voltage(requestedSpeed);
   backR.move_voltage(requestedSpeed);
 }
+
+void slewRate(int requestedDistance)
+{
+  efrontL.reset();
+  slewIncrease(12000);
+  double encoderDist = efrontL.get();
+
+  double convertDist = requestedDistance / (3.14159265 * 4) * 900;
+
+  double midDist = convertDist - encoderDist - 148;
+
+  efrontL.reset();
+  while(efrontL.get() < midDist)
+  {
+    frontL.move_voltage(12000);
+    frontR.move_voltage(12000);
+    backL.move_voltage(12000);
+    backR.move_voltage(12000);
+  }
+  
+  efrontL.reset();
+  slewDecrease(0);
+}

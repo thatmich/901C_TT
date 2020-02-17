@@ -121,11 +121,43 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/autonomous.cpp.o",
-            "src/autonomous.cpp"
+            "bin/opcontrol.cpp.o",
+            "src/opcontrol.cpp"
         ],
         "directory": "/Users/Won/Desktop/PROS_Projects/901C_TT",
-        "file": "src/autonomous.cpp"
+        "file": "src/opcontrol.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-target",
+            "armv7ar-none-none-eabi",
+            "-isystem/Users/Won/Desktop/pros-toolchain/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1",
+            "-isystem/Users/Won/Desktop/pros-toolchain/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/arm-none-eabi/thumb/v7+fp/softfp",
+            "-isystem/Users/Won/Desktop/pros-toolchain/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/backward",
+            "-isystem/Users/Won/Desktop/pros-toolchain/bin/../lib/gcc/arm-none-eabi/8.2.1/include",
+            "-isystem/Users/Won/Desktop/pros-toolchain/bin/../lib/gcc/arm-none-eabi/8.2.1/include-fixed",
+            "-isystem/Users/Won/Desktop/pros-toolchain/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include",
+            "-iquote./include",
+            "-iquote./include/auton_functions/",
+            "-mcpu=cortex-a9",
+            "-mfpu=neon-fp16",
+            "-mfloat-abi=softfp",
+            "-D_POSIX_THREADS",
+            "-D_UNIX98_THREAD_MUTEX_ATTRIBUTES",
+            "-Os",
+            "-funwind-tables",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-fdiagnostics-color",
+            "--std=gnu++17",
+            "-o",
+            "bin/auton_functions/okapi_functions.cpp.o",
+            "src/auton_functions/okapi_functions.cpp"
+        ],
+        "directory": "/Users/Won/Desktop/PROS_Projects/901C_TT",
+        "file": "src/auton_functions/okapi_functions.cpp"
     },
     {
         "arguments": [
@@ -185,42 +217,10 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/opcontrol.cpp.o",
-            "src/opcontrol.cpp"
+            "bin/autonomous.cpp.o",
+            "src/autonomous.cpp"
         ],
         "directory": "/Users/Won/Desktop/PROS_Projects/901C_TT",
-        "file": "src/opcontrol.cpp"
-    },
-    {
-        "arguments": [
-            "clang++",
-            "-c",
-            "-target",
-            "armv7ar-none-none-eabi",
-            "-isystem/Users/Won/Desktop/pros-toolchain/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1",
-            "-isystem/Users/Won/Desktop/pros-toolchain/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/arm-none-eabi/thumb/v7+fp/softfp",
-            "-isystem/Users/Won/Desktop/pros-toolchain/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include/c++/8.2.1/backward",
-            "-isystem/Users/Won/Desktop/pros-toolchain/bin/../lib/gcc/arm-none-eabi/8.2.1/include",
-            "-isystem/Users/Won/Desktop/pros-toolchain/bin/../lib/gcc/arm-none-eabi/8.2.1/include-fixed",
-            "-isystem/Users/Won/Desktop/pros-toolchain/bin/../lib/gcc/arm-none-eabi/8.2.1/../../../../arm-none-eabi/include",
-            "-iquote./include",
-            "-iquote./include/auton_functions/",
-            "-mcpu=cortex-a9",
-            "-mfpu=neon-fp16",
-            "-mfloat-abi=softfp",
-            "-D_POSIX_THREADS",
-            "-D_UNIX98_THREAD_MUTEX_ATTRIBUTES",
-            "-Os",
-            "-funwind-tables",
-            "-ffunction-sections",
-            "-fdata-sections",
-            "-fdiagnostics-color",
-            "--std=gnu++17",
-            "-o",
-            "bin/auton_functions/okapi_functions.cpp.o",
-            "src/auton_functions/okapi_functions.cpp"
-        ],
-        "directory": "/Users/Won/Desktop/PROS_Projects/901C_TT",
-        "file": "src/auton_functions/okapi_functions.cpp"
+        "file": "src/autonomous.cpp"
     }
 ]
