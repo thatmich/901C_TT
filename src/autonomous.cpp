@@ -16,17 +16,7 @@
  */
 void autonomous() {
 
-  slewIncrease(12000);
-
-  frontL.move_voltage(12000);
-  frontR.move_voltage(12000);
-  backL.move_voltage(12000);
-  backR.move_voltage(12000);
-  pros::delay(500);
-
-  efrontL.reset();
-  slewDecrease(0);
-  printf("%f", efrontL.get());
+  slewRate(30); // in inches
 
   /*while(true)
   {

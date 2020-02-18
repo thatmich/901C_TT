@@ -33,3 +33,5 @@ void tilterPID(float target, float threshold);
 void slewIncrease(int requestedSpeed);
 
 void slewDecrease(int requestedSpeed);
+
+void slewRate(int requestDist);
