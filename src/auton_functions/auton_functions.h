@@ -35,3 +35,5 @@ void slewIncrease(int requestedSpeed);
 void slewDecrease(int requestedSpeed);
 
 void slewRate(int requestDist);
+
+void basePID(float target, float threshold);
