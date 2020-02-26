@@ -16,8 +16,7 @@
  */
 void autonomous() {
 
-  basePID(30, 1);
-  //slewRate(30); // in inches
+  slewRate(30); // in inches
 
   /*while(true)
   {

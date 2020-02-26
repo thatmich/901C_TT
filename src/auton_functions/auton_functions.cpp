@@ -70,33 +70,35 @@ void tilterPID(float target, float threshold){
 void basePID(float target, float threshold)
 {
   float kP = 0.5; // test
-  float kI = 0.01; // test
+  float kI = 0; // test
   float kD = 0;
-  int integral = 0;
+  //int integral = 0;
   float power = 0;
   int base_value = frontL.get_position();
   float error = target;
   int dT = 0;
-
+  printf("Time, Error\n");
   while(fabs(error) > fabs(threshold))
   {
-    integral = integral + error;
-    if(fabs(error) > 30)
-    {
-      integral = 0;
-    }
+    // integral = integral + error;
+    // if(fabs(error) > 30)
+    // {
+    //   integral = 0;
+    // }
+    //
+    // if(target * error <= 0)
+    // {
+    //   integral = 0;
+    // }
 
-    if(target * error <= 0)
-    {
-      integral = 0;
-    }
-
-    power = error * kP + integral * kI;
+    power = error * kP; //+ integral * kI;
     frontL.move_voltage(power * 6);
     frontR.move_voltage(power * 6);
     backL.move_voltage(power * 6);
     backR.move_voltage(power * 6);
     error = target - frontL.get_position() - base_value;
+    printf("Base = %lf\n", frontL.get_position());
+    printf("Voltage = %i\n", frontL.get_voltage());
     pros::delay(10);
     dT = dT + 10;
   }
@@ -154,7 +156,7 @@ void slewDecrease(int requestedSpeed)
   backR.move_voltage(requestedSpeed);
 }
 
-// requestedDistance is measured in centimeters
+// requestedDistance is measured in inches or cm depending on below
 void slewRate(int requestDist)
 {
   efrontL.reset();
@@ -162,19 +164,39 @@ void slewRate(int requestDist)
   double encoderDist = efrontL.get();
 
   //double convertDist = (requestDist / 2.54) / (3.14159265 * 4) * 900; // (if requestDist is in cm)
-  double convertDist = requestDist / (3.14159265 * 4) * 900; // (if requestDist is in in)
+  double convertDist = fabs(requestDist) / (3.14159265 * 4) * 900; // (if requestDist is in inches)
 
-  double midDist = convertDist - encoderDist - 160; // tune by changing the last value
+  double midDist = convertDist - encoderDist - 148; // tune by changing the last value
 
   efrontL.reset();
-  while(efrontL.get() < midDist)
+  if(requestDist > 0)
   {
-    frontL.move_voltage(12000);
-    frontR.move_voltage(12000);
-    backL.move_voltage(12000);
-    backR.move_voltage(12000);
+    while(efrontL.get() < midDist)
+    {
+      frontL.move_voltage(12000);
+      frontR.move_voltage(12000);
+      backL.move_voltage(12000);
+      backR.move_voltage(12000);
+    }
   }
 
-  efrontL.reset();
-  slewDecrease(0);
+  else if(requestDist < 0)
+  {
+    while(efrontL.get() > -midDist)
+    {
+      frontL.move_voltage(-12000);
+      frontR.move_voltage(-12000);
+      backL.move_voltage(-12000);
+      backR.move_voltage(-12000);
+    }
+  }
+
+  frontL.move_voltage(0);
+  frontR.move_voltage(0);
+  backL.move_voltage(0);
+  backR.move_voltage(0);
+  //printf("michibruh");
+  //efrontL.reset();
+  //slewDecrease(0);
+  //basePID(148, 1);
 }
