@@ -121,82 +121,92 @@ void basePID(float target, float threshold)
 }
 
 // slew rate code 2.0 (not tested)
-void slewIncrease(int requestedSpeed)
-{
-  efrontL.reset();
-  for(int spd = 0; spd < requestedSpeed; spd++) // change increments
-  {
-    frontL.move_voltage(spd);
-    frontR.move_voltage(spd);
-    backL.move_voltage(spd);
-    backR.move_voltage(spd);
-  }
-
-  frontL.move_voltage(requestedSpeed);
-  frontR.move_voltage(requestedSpeed);
-  backL.move_voltage(requestedSpeed);
-  backR.move_voltage(requestedSpeed);
-
-  double distance = efrontL.get() / 900 * 4 * 3.14159265;
-}
-
-void slewDecrease(int requestedSpeed)
-{
-  for(int spd = frontL.get_voltage(); spd > requestedSpeed; spd--)
-  {
-    frontL.move_voltage(spd);
-    frontR.move_voltage(spd);
-    backL.move_voltage(spd);
-    backR.move_voltage(spd);
-  }
-
-  frontL.move_voltage(requestedSpeed);
-  frontR.move_voltage(requestedSpeed);
-  backL.move_voltage(requestedSpeed);
-  backR.move_voltage(requestedSpeed);
-}
-
-// requestedDistance is measured in inches or cm depending on below
-void slewRate(int requestDist)
-{
-  efrontL.reset();
-  slewIncrease(12000);
-  double encoderDist = efrontL.get();
-
-  //double convertDist = (requestDist / 2.54) / (3.14159265 * 4) * 900; // (if requestDist is in cm)
-  double convertDist = fabs(requestDist) / (3.14159265 * 4) * 900; // (if requestDist is in inches)
-
-  double midDist = convertDist - encoderDist - 148; // tune by changing the last value
-
-  efrontL.reset();
-  if(requestDist > 0)
-  {
-    while(efrontL.get() < midDist)
-    {
-      frontL.move_voltage(12000);
-      frontR.move_voltage(12000);
-      backL.move_voltage(12000);
-      backR.move_voltage(12000);
-    }
-  }
-
-  else if(requestDist < 0)
-  {
-    while(efrontL.get() > -midDist)
-    {
-      frontL.move_voltage(-12000);
-      frontR.move_voltage(-12000);
-      backL.move_voltage(-12000);
-      backR.move_voltage(-12000);
-    }
-  }
-
-  frontL.move_voltage(0);
-  frontR.move_voltage(0);
-  backL.move_voltage(0);
-  backR.move_voltage(0);
-  //printf("michibruh");
-  //efrontL.reset();
-  //slewDecrease(0);
-  //basePID(148, 1);
-}
+// void slewIncrease(int requestedSpeed)
+// {
+//   efrontR.reset();
+//   for(int spd = 0; spd <= requestedSpeed; spd++) // change increments
+//   {
+//     frontL.move_voltage(spd);
+//     frontR.move_voltage(spd);
+//     backL.move_voltage(spd);
+//     backR.move_voltage(spd);
+//     printf("walrus");
+//   }
+//   printf("done");
+//   // frontL.move_voltage(requestedSpeed);
+//   // frontR.move_voltage(requestedSpeed);
+//   // backL.move_voltage(requestedSpeed);
+//   // backR.move_voltage(requestedSpeed);
+//
+//   //double distance = efrontR.get() / 900 * 4 * 3.14159265;
+// }
+//
+// void slewDecrease(int requestedSpeed)
+// {
+//   for(int spd = frontL.get_voltage(); spd > requestedSpeed; spd--)
+//   {
+//     frontL.move_voltage(spd);
+//     frontR.move_voltage(spd);
+//     backL.move_voltage(spd);
+//     backR.move_voltage(spd);
+//   }
+//
+//   frontL.move_voltage(requestedSpeed);
+//   frontR.move_voltage(requestedSpeed);
+//   backL.move_voltage(requestedSpeed);
+//   backR.move_voltage(requestedSpeed);
+// }
+//
+// // requestedDistance is measured in inches or cm depending on below
+// void slewRate(int requestDist)
+// {
+//   efrontR.reset();
+//   if(requestDist > 0)
+//   {
+//     slewIncrease(12000);
+//   }
+//
+//   else if(requestDist < 0)
+//   {
+//     slewIncrease(-12000);
+//   }
+//
+//   double encoderDist = efrontR.get();
+//
+//   //double convertDist = (requestDist / 2.54) / (3.14159265 * 4) * 900; // (if requestDist is in cm)
+//   double convertDist = fabs(requestDist) / (3.14159265 * 4) * 900; // (if requestDist is in inches)
+//
+//   double midDist = convertDist - encoderDist - 148; // tune by changing the last value
+//
+//   efrontR.reset();
+//   if(requestDist > 0)
+//   {
+//     while(efrontR.get() < midDist)
+//     {
+//       frontL.move_voltage(12000);
+//       frontR.move_voltage(12000);
+//       backL.move_voltage(12000);
+//       backR.move_voltage(12000);
+//     }
+//   }
+//
+//   else if(requestDist < 0)
+//   {
+//     while(efrontR.get() > -midDist)
+//     {
+//       frontL.move_voltage(-12000);
+//       frontR.move_voltage(-12000);
+//       backL.move_voltage(-12000);
+//       backR.move_voltage(-12000);
+//     }
+//   }
+//
+//   frontL.move_voltage(0);
+//   frontR.move_voltage(0);
+//   backL.move_voltage(0);
+//   backR.move_voltage(0);
+//   //printf("michibruh");
+//   //efrontR.reset();
+//   //slewDecrease(0);
+//   //basePID(148, 1);
+// }

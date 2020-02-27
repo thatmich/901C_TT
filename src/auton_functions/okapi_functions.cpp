@@ -555,7 +555,7 @@ int t = 0;
 
 void printValues()
 {
-  printf("%d %f", t, efrontL.get());
+  printf("%d %f", t, efrontR.get());
   printf("\n");
   printf("");
   t += 5;
@@ -602,3 +602,58 @@ voltage the motor should be set at (not tested)*/
   backL.move_voltage(12000);
   backR.move_voltage(12000);
 }*/
+
+void slewIncrease(int requestedSpeed)
+{
+  for(int spd = 0; spd < requestedSpeed; spd++)
+  {
+    frontL.move_voltage(spd);
+    frontR.move_voltage(spd);
+    backL.move_voltage(spd);
+    backR.move_voltage(spd);
+  }
+
+  frontL.move_voltage(requestedSpeed);
+  frontR.move_voltage(requestedSpeed);
+  backL.move_voltage(requestedSpeed);
+  backR.move_voltage(requestedSpeed);
+}
+
+void slewDecrease(int requestedSpeed)
+{
+  for(int spd = frontL.get_voltage(); spd > requestedSpeed; spd--)
+  {
+    frontL.move_voltage(spd);
+    frontR.move_voltage(spd);
+    backL.move_voltage(spd);
+    backR.move_voltage(spd);
+  }
+
+  frontL.move_voltage(requestedSpeed);
+  frontR.move_voltage(requestedSpeed);
+  backL.move_voltage(requestedSpeed);
+  backR.move_voltage(requestedSpeed);
+}
+
+void slewRate(int requestedDistance)
+{
+  efrontR.reset();
+  slewIncrease(12000);
+  double encoderDist = efrontR.get();
+
+  double convertDist = requestedDistance / (3.14159265 * 4) * 900;
+
+  double midDist = convertDist - encoderDist - 160;
+
+  efrontR.reset();
+  while(efrontR.get() < midDist)
+  {
+    frontL.move_voltage(12000);
+    frontR.move_voltage(12000);
+    backL.move_voltage(12000);
+    backR.move_voltage(12000);
+  }
+
+  efrontR.reset();
+  slewDecrease(0);
+}

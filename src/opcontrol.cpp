@@ -46,7 +46,7 @@ void opcontrol() {
 
 		//Won's boosted printing velocity values
 		//printValues();
-		efrontL.get();
+		efrontR.get();
 		if(controller.get_digital_new_press(DIGITAL_UP) == 1 && controller.get_digital_new_press(DIGITAL_DOWN) == 1){
 			if(!holding){
 				pros::c::motor_set_brake_mode(frontL_port, MOTOR_BRAKE_HOLD);

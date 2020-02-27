@@ -25,4 +25,4 @@ pros::Motor tray(tray_port, true);
 pros::Motor lift(lift_port, true);
 //pros::ADIDigitalIn lift_limit (lift_limit_port);
 pros::ADIDigitalIn auton_limit (auton_limit_port);
-okapi::IntegratedEncoder efrontL(frontL);
+okapi::IntegratedEncoder efrontR(frontR);
