@@ -34,10 +34,10 @@ void opcontrol() {
 	}
 
 /* ---------- DECLARE TASKS -------------*/
-	// std::string param1("lift");
-	// std::string param2("tray");
-	// pros::Task task1(lift_task,&param1);
-	// pros::Task task2(tray_task,&param2);
+	std::string param1("lift");
+	std::string param2("tray");
+	pros::Task task1(lift_task,&param1);
+	pros::Task task2(tray_task,&param2);
 
 
 	/* ---------- MAIN LOOP -------------*/

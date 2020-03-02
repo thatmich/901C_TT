@@ -15,8 +15,8 @@ const int lift_limit_port = 1;
 const int auton_limit_port = 8;
 
 // declares motor port and whether it is reversed
-pros::Motor frontL(frontL_port,false);
-pros::Motor frontR(frontR_port, true);
+pros::Motor frontL(frontL_port, true);
+pros::Motor frontR(frontR_port, false);
 pros::Motor backL(backL_port,true);
 pros::Motor backR(backR_port, false);
 pros::Motor intakeL(intakeL_port,true);
